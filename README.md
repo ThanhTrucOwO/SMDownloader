@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="96" align="center" src="assets/profile.webp" alt="logo">
+  <img width="96" align="center" src="Icon/logo.ico" alt="logo">
 </p>
   <h1 align="center">
   SMDownloader
