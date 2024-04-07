@@ -26,3 +26,44 @@
     <img src="https://img.shields.io/badge/os-linux%20%20%7C%20windows-blue" alt="Platform Win32 | Linux"/>
   </a>
 </p>
+
+## Quick start
+
+### Windows OS
+
+1. If python is not in your system
+
+   - [Install python3.10 or higher version](https://www.python.org/downloads/)
+
+2. Install Pip:
+   - [Document](https://pip.pypa.io/en/stable/installation/)
+3. Install ffmpeg
+   - [Download](https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip)
+   - [Video tutorial](https://youtu.be/IECI72XEox0?t=229)
+4. Install the required libraries
+
+   ```shell
+   pip install tk
+   pip install customtkinter
+   pip install PyQt5
+   pip install yt_dlp
+   pip install tqdm
+   pip install pillow
+   ```
+
+5. Then after that, clone the repository
+   ```shell
+   git clone https://github.com/ThanhTrucOwO/SMDownloader.git
+   ```
+   Navigate to the project directory
+   ```
+   cd SMDownloader
+   ```
+6. Run the application
+   ```shell
+   python main.py
+   ```
+
+### License
+
+GPL-3.0
