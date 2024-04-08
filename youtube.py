@@ -5,7 +5,7 @@ import io
 from PIL import Image, ImageTk
 import requests
 import re
-import signal
+
 class YoutubeDownloader:
     def __init__(self):
 
@@ -48,9 +48,21 @@ class YoutubeDownloader:
             return
 
         resolution = self.resolution_var.get()
-        ydl_opts = {'format': self.get_video_format(resolution)}
+        # Hiển thị dialog hỏi người dùng về việc sử dụng SponsorBlock
+        dialog = customtkinter.CTkInputDialog(text="Bạn có muốn sử dụng SponsorBlock để bỏ qua các phần không cần thiết?", title="Sử dụng SponsorBlock")
+        user_choice = dialog.get_input()
 
-        self.download_with_ydl(video_url, ydl_opts, is_video=True)
+        if user_choice == "Có" or user_choice == "Yes":
+            ydl_opts = {
+                "format": self.get_video_format(resolution),
+                "postprocessors": self.get_sponsorblock_config()
+            }
+            self.download_with_ydl(video_url, ydl_opts, is_video=True)
+
+        elif user_choice == "Không" or user_choice == "No":
+            ydl_opts = {"format": self.get_video_format(resolution)}
+            self.download_with_ydl(video_url, ydl_opts, is_video=True)
+        # Nếu người dùng nhấn Cancel, không làm gì cả
 
     def download_audio(self):
         video_url = self.entry.get()
@@ -58,15 +70,26 @@ class YoutubeDownloader:
             messagebox.showerror("Lỗi", "Vui lòng nhập URL video!")
             return
 
-        ydl_opts = {
+        dialog = customtkinter.CTkInputDialog(text="Bạn có muốn sử dụng SponsorBlock để bỏ qua các phần không cần thiết?", title="Sử dụng SponsorBlock")
+        user_choice = dialog.get_input()
+
+        if user_choice == "Có" or user_choice == "Yes":
+            ydl_opts = {
+                "format": "m4a/bestaudio/best",
+                "postprocessors": self.get_sponsorblock_config()
+            }
+            self.download_with_ydl(video_url, ydl_opts, is_video=False)
+
+        elif user_choice == "Không" or user_choice == "No":
+            ydl_opts = {
             'format': 'm4a/bestaudio/best',
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'm4a',
             }]
         }
+            self.download_with_ydl(video_url, ydl_opts, is_video=False)
 
-        self.download_with_ydl(video_url, ydl_opts, is_video=False)
 
     def download_with_ydl(self, video_url, ydl_opts, is_video):
         try:
@@ -91,18 +114,14 @@ class YoutubeDownloader:
 
     def get_video_format(self, resolution):
         format_options = {
-            "720p": "bestvideo[height<=720]+bestaudio/best[height<=720]",
-            "480p": "bestvideo[height<=480]+bestaudio/best[height<=480]",
-            "360p": "bestvideo[height<=360]+bestaudio/best[height<=360]",
-            "240p": "bestvideo[height<=240]+bestaudio/best[height<=240]",
-            "144p": "bestvideo[height<=144]+bestaudio/best[height<=144]"
+            "720p": "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]",
+            "480p": "bestvideo[height<=480][ext=mp4]+bestaudio[ext=m4a]/best[height<=480][ext=mp4]", 
+            "360p": "bestvideo[height<=360][ext=mp4]+bestaudio[ext=m4a]/best[height<=360][ext=mp4]",
+            "240p": "bestvideo[height<=240][ext=mp4]+bestaudio[ext=m4a]/best[height<=240][ext=mp4]",
+            "144p": "bestvideo[height<=144][ext=mp4]+bestaudio[ext=m4a]/best[height<=144][ext=mp4]"
         }
-        return format_options.get(resolution, "bestvideo+bestaudio/best")
-
-    def update_thumbnail(self, event):
-        video_url = self.entry.get()
-        self.get_thumbnail(video_url)
-
+        return format_options.get(resolution, "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]")
+    
     def update_thumbnail(self, event):
         video_url = self.entry.get()
         pattern = r'^https?://www\.youtube\.com/watch\?.*(?=&list)'
@@ -133,5 +152,42 @@ class YoutubeDownloader:
             print(f"Lỗi khi lấy thumbnail: {e}")
             self.thumbnail_label.configure(image=None)
             self.title_label.configure(text="")
+
+    def get_sponsorblock_config(self):
+        return [
+            {
+                "api": "https://sponsor.ajay.app",
+                "categories": {
+                    "chapter",
+                    "filler",
+                    "interaction",
+                    "intro",
+                    "music_offtopic",
+                    "outro",
+                    "poi_highlight",
+                    "preview",
+                    "selfpromo",
+                    "sponsor",
+                },
+                "key": "SponsorBlock",
+                "when": "after_filter",
+            },
+            {
+                "key": "ModifyChapters",
+                "remove_sponsor_segments": {
+                    "chapter",
+                    "filler",
+                    "interaction",
+                    "intro",
+                    "music_offtopic",
+                    "outro",
+                    "poi_highlight",
+                    "preview",
+                    "selfpromo",
+                    "sponsor",
+                },
+            },
+        ]
+    
 if __name__ == "__main__":
     downloader = YoutubeDownloader()
