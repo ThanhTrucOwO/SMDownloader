@@ -64,44 +64,6 @@
    python main.py
    ```
 
-### Linux OS
-
-1. If python is not in your system
-   ```shell
-   sudo apt install software-properties-common
-   sudo add-apt-repository ppa:deadsnakes/ppa
-   sudo apt update
-   sudo apt install python3.10
-   ```
-2. Install Pip
-   ```shell
-   sudo apt-get install python-pip
-   ```
-3. Install the required libraries
-   ```shell
-   sudo apt-get install python3-tk
-   sudo apt-get install python3-pil python3-pil.imagetk
-   sudo apt install gstreamer1.0-libav gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly
-   python3 -m pip install customtkinter
-   python3 -m pip install PyQt5
-   python3 -m pip install yt_dlp
-   python3 -m pip install tqdm
-   ```
-4. Install ffmpeg
-   - [Download](https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip)
-   - Extract file
-   - Copy 3 file in ffmpeg-master-latest-linux64-gpl/bin and paste to /usr/bin
-     Example:
-   ```shell
-    sudo cp /home/truc/Downloads/ffmpeg-master-latest-linux64-gpl/bin/ffmpeg /usr/bin
-    sudo cp /home/truc/Downloads/ffmpeg-master-latest-linux64-gpl/bin/ffplay /usr/bin
-    sudo cp /home/truc/Downloads/ffmpeg-master-latest-linux64-gpl/bin/ffprobe /usr/bin
-   ```
-5. Run the application
-   ```shell
-   python3 main.py
-   ```
-
 ### License
 
 GPL-3.0

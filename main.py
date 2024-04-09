@@ -6,7 +6,6 @@ import platform
 system_type = platform.system()
 if system_type == 'Linux':
     os.environ["QT_QPA_PLATFORM"] = "wayland"
-    
 class SocialMediaDownloader:
     def __init__(self):
 
