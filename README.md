@@ -5,7 +5,7 @@
   SMDownloader
 </h1>
 <p align="center">
-  A Social Media Downloader based on Tkinter, CustomTkinter and PyQt5
+  A Social Media Downloader based on Tkinter, CustomTkinter, yt-dlp and PyQt5
 </p>
 
 <p align="center">
@@ -20,6 +20,16 @@
     
   <a style="text-decoration:none">
     <img src="https://img.shields.io/badge/CustomTkinter-5.1.2-blue" alt="CustomTkinter 5.1.2"/>
+  </a>
+
+  <a style="text-decoration:none">
+    <img src="https://img.shields.io/badge/yt--dlp-2024.03.10-blue
+    " alt="yt-dlp 2024.03.10"/>
+  </a>
+
+  <a style="text-decoration:none">
+    <img src="https://img.shields.io/badge/PyQt5-5.15.1-blue
+    " alt="PyQt5 5.15.1"/>
   </a>
 
   <a style="text-decoration:none">
