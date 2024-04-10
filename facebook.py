@@ -1,9 +1,10 @@
 import customtkinter
 import requests
 import random
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 import re
 from tqdm import tqdm
+import os
 
 class FacebookDownloader:
     def __init__(self):
@@ -29,6 +30,13 @@ class FacebookDownloader:
 
         self.app.mainloop()
 
+    def select_download_folder(self):
+        download_folder = filedialog.askdirectory()
+        if download_folder:
+            return download_folder
+        else:
+            return None
+
     def get_download_info(self, url):
         params = {'video_url': url}
         return requests.get(self.api_url, headers=self.api_headers ,params=params)
@@ -49,8 +57,14 @@ class FacebookDownloader:
                     names = random.randrange(1, 1000)
                     clean_title = 'videoFB' + str(names)
                 filename = clean_title + '.mp4'
-                self.save_video(video_url, filename)
-                messagebox.showinfo("Thông báo!", "Đã tải video thành công!")
+
+                download_folder = self.select_download_folder()
+                if download_folder:
+                    full_path = os.path.join(download_folder, filename)
+                    self.save_video(video_url, full_path)
+                    messagebox.showinfo("Thông báo!", "Đã tải video thành công!")
+                else:
+                    messagebox.showwarning("Cảnh báo", "Bạn chưa chọn thư mục lưu video.")
             except (KeyError, ValueError):
                 messagebox.showerror("Lỗi", "Không thể tải video hoặc lỗi khi xử lý dữ liệu!")
         else:

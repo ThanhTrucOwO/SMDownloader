@@ -1,10 +1,11 @@
 import customtkinter
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 import yt_dlp
 import io
 from PIL import Image, ImageTk
 import requests
 import re
+import os
 
 class YoutubeDownloader:
     def __init__(self):
@@ -41,6 +42,13 @@ class YoutubeDownloader:
 
         self.app.mainloop()
 
+    def select_download_folder(self):
+        download_folder = filedialog.askdirectory()
+        if download_folder:
+            return download_folder
+        else:
+            return None
+
     def download_video(self):
         video_url = self.entry.get()
         if not video_url:
@@ -48,21 +56,27 @@ class YoutubeDownloader:
             return
 
         resolution = self.resolution_var.get()
-        # Hiển thị dialog hỏi người dùng về việc sử dụng SponsorBlock
-        dialog = customtkinter.CTkInputDialog(text="Bạn có muốn sử dụng SponsorBlock để bỏ qua các phần không cần thiết?", title="Sử dụng SponsorBlock")
-        user_choice = dialog.get_input()
+        download_folder = self.select_download_folder()
+        if download_folder:
+            # Hiển thị dialog hỏi người dùng về việc sử dụng SponsorBlock
+            dialog = customtkinter.CTkInputDialog(text="Bạn có muốn sử dụng SponsorBlock để bỏ qua các phần không cần thiết?", title="Sử dụng SponsorBlock")
+            user_choice = dialog.get_input()
 
-        if user_choice == "Có" or user_choice == "Yes":
-            ydl_opts = {
-                "format": self.get_video_format(resolution),
-                "postprocessors": self.get_sponsorblock_config()
-            }
-            self.download_with_ydl(video_url, ydl_opts, is_video=True)
+            if user_choice == "Có" or user_choice == "Yes":
+                ydl_opts = {
+                    "format": self.get_video_format(resolution),
+                    "postprocessors": self.get_sponsorblock_config(),
+                    "outtmpl": os.path.join(download_folder, "%(title)s.%(ext)s") 
+                }
+                self.download_with_ydl(video_url, ydl_opts, is_video=True)
 
-        elif user_choice == "Không" or user_choice == "No":
-            ydl_opts = {"format": self.get_video_format(resolution)}
-            self.download_with_ydl(video_url, ydl_opts, is_video=True)
-        # Nếu người dùng nhấn Cancel, không làm gì cả
+            elif user_choice == "Không" or user_choice == "No":
+                ydl_opts = {"format": self.get_video_format(resolution),
+                            "outtmpl": os.path.join(download_folder, "%(title)s.%(ext)s") }
+                self.download_with_ydl(video_url, ydl_opts, is_video=True)
+            # Nếu người dùng nhấn Cancel, không làm gì cả
+        else:
+            messagebox.showwarning("Cảnh báo", "Bạn chưa chọn thư mục lưu video.")
 
     def download_audio(self):
         video_url = self.entry.get()
@@ -70,25 +84,31 @@ class YoutubeDownloader:
             messagebox.showerror("Lỗi", "Vui lòng nhập URL video!")
             return
 
-        dialog = customtkinter.CTkInputDialog(text="Bạn có muốn sử dụng SponsorBlock để bỏ qua các phần không cần thiết?", title="Sử dụng SponsorBlock")
-        user_choice = dialog.get_input()
+        download_folder = self.select_download_folder()
+        if download_folder:
+            dialog = customtkinter.CTkInputDialog(text="Bạn có muốn sử dụng SponsorBlock để bỏ qua các phần không cần thiết?", title="Sử dụng SponsorBlock")
+            user_choice = dialog.get_input()
 
-        if user_choice == "Có" or user_choice == "Yes":
-            ydl_opts = {
-                "format": "m4a/bestaudio/best",
-                "postprocessors": self.get_sponsorblock_config()
+            if user_choice == "Có" or user_choice == "Yes":
+                ydl_opts = {
+                    "format": "m4a/bestaudio/best",
+                    "postprocessors": self.get_sponsorblock_config(),
+                    "outtmpl": os.path.join(download_folder, "%(title)s.%(ext)s")  
+                }
+                self.download_with_ydl(video_url, ydl_opts, is_video=False)
+
+            elif user_choice == "Không" or user_choice == "No":
+                ydl_opts = {
+                'format': 'm4a/bestaudio/best',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'm4a',
+                    "outtmpl": os.path.join(download_folder, "%(title)s.%(ext)s") 
+                }]
             }
-            self.download_with_ydl(video_url, ydl_opts, is_video=False)
-
-        elif user_choice == "Không" or user_choice == "No":
-            ydl_opts = {
-            'format': 'm4a/bestaudio/best',
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'm4a',
-            }]
-        }
-            self.download_with_ydl(video_url, ydl_opts, is_video=False)
+                self.download_with_ydl(video_url, ydl_opts, is_video=False)
+        else:
+            messagebox.showwarning("Cảnh báo", "Bạn chưa chọn thư mục lưu video.")
 
 
     def download_with_ydl(self, video_url, ydl_opts, is_video):

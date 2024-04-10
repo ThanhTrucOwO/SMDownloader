@@ -1,9 +1,10 @@
 import customtkinter
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 from tqdm import tqdm
 import requests
 import random
 import re
+import os
 
 class TiktokDownloader:
     def __init__(self):
@@ -27,6 +28,13 @@ class TiktokDownloader:
 
         self.app.mainloop()
 
+    def select_download_folder(self):
+        download_folder = filedialog.askdirectory()
+        if download_folder:
+            return download_folder
+        else:
+            return None
+
     def download_video(self):
         url = self.entry.get()
         if not url:
@@ -47,8 +55,14 @@ class TiktokDownloader:
                     names = random.randrange(1, 1000)
                     clean_title = 'videoTiktok' + str(names)
                 filename = clean_title + '.mp4'
-                self.save_video(video_url, filename)
-                messagebox.showinfo("Thông báo!", "Đã tải video thành công!")
+                
+                download_folder = self.select_download_folder()
+                if download_folder:
+                    full_path = os.path.join(download_folder, filename)
+                    self.save_video(video_url, full_path)
+                    messagebox.showinfo("Thông báo!", "Đã tải video thành công!")
+                else:
+                    messagebox.showwarning("Cảnh báo", "Bạn chưa chọn thư mục lưu video.")
             except (KeyError, ValueError):
                 messagebox.showerror("Lỗi", "Không thể tải video hoặc lỗi khi xử lý dữ liệu!")
         else:
