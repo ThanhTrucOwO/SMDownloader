@@ -5,6 +5,7 @@ from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtGui import QIcon, QPalette, QColor
 from PyQt5.QtCore import Qt, QUrl
 import os
+
 class Window(QWidget):
     def __init__(self):
         super().__init__()
