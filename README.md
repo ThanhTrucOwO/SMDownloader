@@ -97,7 +97,15 @@
     sudo cp /home/truc/Downloads/ffmpeg-master-latest-linux64-gpl/bin/ffplay /usr/bin
     sudo cp /home/truc/Downloads/ffmpeg-master-latest-linux64-gpl/bin/ffprobe /usr/bin
    ```
-5. Run the application
+5. Then after that, clone the repository
+   ```shell
+   git clone https://github.com/ThanhTrucOwO/SMDownloader.git
+   ```
+   Navigate to the project directory
+   ```
+   cd SMDownloader
+   ```
+6. Run the application
    ```shell
    python3 main.py
    ```
