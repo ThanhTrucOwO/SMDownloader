@@ -90,7 +90,7 @@
 4. Install ffmpeg
    - [Download](https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip)
    - Extract file
-   - Copy 3 file in ffmpeg-master-latest-linux64-gpl/bin and paste to /usr/bin
+   - Copy 3 file in ffmpeg-master-latest-linux64-gpl/bin and paste to /usr/bin \
      Example:
    ```shell
     sudo cp /home/truc/Downloads/ffmpeg-master-latest-linux64-gpl/bin/ffmpeg /usr/bin
