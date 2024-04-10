@@ -23,13 +23,11 @@
   </a>
 
   <a style="text-decoration:none">
-    <img src="https://img.shields.io/badge/yt--dlp-2024.03.10-blue
-    " alt="yt-dlp 2024.03.10"/>
+    <img src="https://img.shields.io/badge/yt--dlp-2024.03.10-blue" alt="yt-dlp 2024.03.10"/>
   </a>
 
   <a style="text-decoration:none">
-    <img src="https://img.shields.io/badge/PyQt5-5.15.1-blue
-    " alt="PyQt5 5.15.1"/>
+    <img src="https://img.shields.io/badge/PyQt5-5.15.1-blue" alt="PyQt5 5.15.1"/>
   </a>
 
   <a style="text-decoration:none">
