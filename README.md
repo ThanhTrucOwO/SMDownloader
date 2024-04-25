@@ -121,10 +121,6 @@
    python3 main.py
    ```
 
-### License
-
-GPL-3.0
-
 ### Latex Project OSSD
 
 [Download](https://drive.google.com/file/d/1d7wT_D3bCUU1NF8X7YAzblzlGn3i32N8/view?usp=sharing)
