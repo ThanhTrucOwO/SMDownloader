@@ -75,12 +75,14 @@
 ### Linux OS
 
 1. If python is not in your system
+
    ```shell
    sudo apt install software-properties-common
    sudo add-apt-repository ppa:deadsnakes/ppa
    sudo apt update
    sudo apt install python3.10
    ```
+
 2. Install Pip
    ```shell
    sudo apt-get install python-pip
