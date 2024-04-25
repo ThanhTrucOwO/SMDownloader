@@ -57,6 +57,7 @@
    pip install yt_dlp
    pip install tqdm
    pip install pillow
+   pip install requests
    ```
 
 5. Then after that, clone the repository
