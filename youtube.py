@@ -99,12 +99,12 @@ class YoutubeDownloader:
 
             elif user_choice == "Không" or user_choice == "No":
                 ydl_opts = {
-                'format': 'm4a/bestaudio/best',
-                'postprocessors': [{
+                "format": 'm4a/bestaudio/best',
+                "postprocessors": [{
                     'key': 'FFmpegExtractAudio',
                     'preferredcodec': 'm4a',
-                    "outtmpl": os.path.join(download_folder, "%(title)s.%(ext)s") 
-                }]
+                }],
+                "outtmpl": os.path.join(download_folder, "%(title)s.%(ext)s") 
             }
                 self.download_with_ydl(video_url, ydl_opts, is_video=False)
         else:
