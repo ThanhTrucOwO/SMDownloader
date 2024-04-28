@@ -121,6 +121,6 @@
    python3 main.py
    ```
 
-### Latex Project OSSD
+### Latex Report OSSD
 
-[Download](https://drive.google.com/file/d/1d7wT_D3bCUU1NF8X7YAzblzlGn3i32N8/view?usp=sharing)
+[Download](https://drive.google.com/file/d/11xIe6ccRWH08ERoDgBUiyU0xk5wcDx59/view?usp=sharing)
